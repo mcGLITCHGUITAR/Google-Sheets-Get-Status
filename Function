@@ -1,0 +1,35 @@
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+Code for the function:
+
+
+=INDIRECT(ADDRESS(1 + XMATCH(MAXIFS(datecolumn, idcolumn, itemid), datecolumn), stockcolumn))
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+Variables/"Argument Placeholders":
+
+
+- datecolumn
+    This is the column in a table for the timestamp. Ex: Sales_Data[Time:] Sales_Data is the name of the table, and Time: is the name of the column. The brackets are required.
+
+- idcolumn
+    This is the column in a table for the IDs. Ex: Sales_Data[ID:] Sales_Data is the name of the table, and ID: is the name of the column. The brackets are required.
+
+- stockcolumn
+    This is the column with the actual status. (Ex: 4) This value MUST be a number, where column A is 1, column B is 2, and so on and so forth.
+
+- itemid 
+    This is the ID used to differentiate the product you want the data for from all the other products. Ex: "#Pants" if the id is anything other than a number, it MUST be in quotes to signify a string.
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+How it works
+
+ Step 1:
+    The MAXIFS function finds the largest date (which is the most recent) that corresponds to the ID.
+ Step 2:
+    The XMATCH function finds the row containing the date from step 1.
+ Step 3:
+    The ADDRESS function provides a cell reference as a string.
+        Row:    Assuming that the table is at the top of the sheet, 1 + XMATCH is used to account for the table title and provide the actual row number.
+        Column: this is purely the stockcolumn value.
+Step 4:
+    The INDIRECT function displays the contents of the calculated address.
